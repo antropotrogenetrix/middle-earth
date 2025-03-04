@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A Love Letter to Middle-earth</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Tangerine:wght@400;700&display=swap');
+
+        body {
+            background: linear-gradient(to bottom, rgba(0,51,25,0.8), rgba(0,25,51,0.8)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><pattern id="pattern" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M0 0 L50 50 L100 0 Z" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23pattern)"/></svg>');
+            font-family: 'Cinzel Decorative', cursive;
+            color: #E6E6FA;
+            overflow-x: hidden;
+        }
+
+        .firefly {
+            position: fixed;
+            pointer-events: none;
+            width: 5px;
+            height: 5px;
+            background: radial-gradient(circle, rgba(255,255,224,1) 0%, rgba(255,255,224,0) 70%);
+            border-radius: 50%;
+            animation: float 10s infinite;
+            z-index: 1000;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0) scale(0.5); }
+            50% { transform: translateY(-100vh) translateX(100vw) scale(1); }
+        }
+
+        .elven-text {
+            font-family: 'Tangerine', cursive;
+            text-shadow: 0 0 10px rgba(224,255,224,0.7);
+        }
+
+        .map-location {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .map-location:hover {
+            transform: scale(1.1);
+            filter: brightness(1.5);
+        }
+
+        #ring-secret {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        #ring-trigger:hover + #ring-secret {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-black min-h-screen relative">
+    <!-- Fireflies Script -->
+    <script>
+        function createFireflies(count) {
+            for (let i = 0; i < count; i++) {
+                const firefly = document.createElement('div');
+                firefly.classList.add('firefly');
+                firefly.style.left = `${Math.random() * 100}%`;
+                firefly.style.animationDelay = `${Math.random() * 10}s`;
+                document.body.appendChild(firefly);
+            }
+        }
+        createFireflies(50);
+    </script>
+
+    <!-- Music Background -->
+    <script>
+        const backgroundMusic = new Howl({
+            src: ['https://cdnjs.cloudflare.com/ajax/libs/placeholder/music.mp3'],
+            loop: true,
+            volume: 0.3
+        });
+        
+        document.addEventListener('click', function() {
+            backgroundMusic.play();
+        });
+    </script>
+
+    <div class="container mx-auto px-4 py-8 text-center">
+        <!-- Homepage Quote -->
+        <header class="mb-12">
+            <h1 class="text-5xl elven-text text-yellow-200 mb-4">A Love Letter to Middle-earth</h1>
+            <blockquote class="text-2xl italic text-green-100 max-w-2xl mx-auto">
+                "Not all those who wander are lost, and not all love is bound by the lands we know."
+            </blockquote>
+        </header>
+
+        <!-- Interactive Map -->
+        <section class="relative mb-16">
+            <svg viewBox="0 0 1000 600" class="w-full h-auto">
+                <!-- Stylized Middle-earth Map Background -->
+                <path d="M200 100 Q500 50, 800 100 Q1000 200, 800 500 Q500 550, 200 500 Q0 400, 200 100" 
+                      fill="rgba(100,200,100,0.2)" stroke="#8B4513" stroke-width="5"/>
+                
+                <!-- Clickable Locations -->
+                <circle cx="300" cy="200" r="30" class="map-location fill-yellow-500 hover:fill-yellow-300" data-location="rivendell" />
+                <circle cx="500" cy="100" r="40" class="map-location fill-green-500 hover:fill-green-300" data-location="shire" />
+                <circle cx="700" cy="300" r="35" class="map-location fill-blue-500 hover:fill-blue-300" data-location="gondor" />
+                
+                <text x="300" y="250" class="fill-white text-xl" text-anchor="middle">Rivendell</text>
+                <text x="500" y="150" class="fill-white text-xl" text-anchor="middle">The Shire</text>
+                <text x="700" y="350" class="fill-white text-xl" text-anchor="middle">Gondor</text>
+            </svg>
+        </section>
+
+        <!-- Love Story Section -->
+        <section class="max-w-3xl mx-auto mb-16 bg-black bg-opacity-50 p-8 rounded-lg">
+            <h2 class="text-3xl elven-text text-yellow-200 mb-6">A Tale of Eternal Love</h2>
+            <div class="text-xl text-gray-200 leading-relaxed">
+                <p>In the soft whispers of ancient forests, where starlight dances between emerald leaves, two souls intertwine like roots of an eternal tree. Their love, deeper than the mines of Moria, stronger than the walls of Gondor, transcends the boundaries of realm and race.</p>
+                <p class="mt-4">Each heartbeat echoes the rhythm of Middle-earth—a melody of passion, courage, and unwavering devotion.</p>
+            </div>
+        </section>
+
+        <!-- Secret Ring Interaction -->
+        <section class="text-center">
+            <div id="ring-trigger" class="inline-block cursor-pointer">
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="gold" stroke="darkgolden" stroke-width="3"/>
+                    <text x="50" y="55" text-anchor="middle" fill="black" font-size="12">One Ring</text>
+                </svg>
+            </div>
+            <div id="ring-secret" class="mt-4 text-xl text-yellow-200">
+                "My love for you is the One Ring—unbreakable, eternal, binding us beyond the circles of this world."
+            </div>
+        </section>
+    </div>
+</body>
+</html>
